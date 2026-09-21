@@ -1,12 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
+import { Avatar } from "@/components/Avatar";
 import {
   formatGap,
   formatLapTime,
-  initials,
   lapTimeError,
   ordinal,
   parseLapTime,
@@ -228,18 +229,24 @@ export function KartBoard({
                     {i + 1}
                   </span>
 
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center border-2 border-ink/20 font-mono text-[10px] font-semibold">
-                    {initials(row.display_name)}
-                  </span>
-
-                  <span className="min-w-0 flex-1 truncate font-medium">
-                    {row.display_name}
-                    {row.verified ? (
-                      <span className="ml-1.5 font-mono text-[9px] uppercase tracking-widest text-approved">
-                        ✓ verified
-                      </span>
-                    ) : null}
-                  </span>
+                  <Link
+                    href={`/u/${row.guest_id}`}
+                    className="flex min-w-0 flex-1 items-center gap-3 active:opacity-70"
+                  >
+                    <Avatar
+                      name={row.display_name}
+                      url={row.avatar_url}
+                      size={32}
+                    />
+                    <span className="min-w-0 flex-1 truncate font-medium">
+                      {row.display_name}
+                      {row.verified ? (
+                        <span className="ml-1.5 font-mono text-[9px] uppercase tracking-widest text-approved">
+                          ✓ verified
+                        </span>
+                      ) : null}
+                    </span>
+                  </Link>
 
                   <span className="text-right">
                     <span className="block font-mono text-base font-semibold tabular-nums">

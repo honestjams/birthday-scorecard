@@ -8,7 +8,9 @@ import { useIsStaff } from "@/components/GuestProvider";
 const TABS = [
   { href: "/bingo", label: "Bingo", glyph: GridGlyph },
   { href: "/karts", label: "Karts", glyph: FlagGlyph },
+  { href: "/carspot", label: "Carspot", glyph: CarGlyph },
   { href: "/draw", label: "Draw", glyph: BracketGlyph },
+  { href: "/standings", label: "Standings", glyph: TrophyGlyph },
   { href: "/gallery", label: "Archive", glyph: ArchiveGlyph },
 ] as const;
 
@@ -30,7 +32,7 @@ export function BottomNav() {
               <Link
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className="relative flex min-h-[56px] flex-col items-center justify-center gap-1 px-1 py-2 active:bg-bone-deep"
+                className="relative flex min-h-[56px] flex-col items-center justify-center gap-1 px-0.5 py-2 active:bg-bone-deep"
               >
                 {active ? (
                   <motion.span
@@ -41,7 +43,7 @@ export function BottomNav() {
                 ) : null}
                 <Glyph active={active} />
                 <span
-                  className={`font-mono text-[9px] font-semibold uppercase tracking-[0.12em] ${
+                  className={`font-mono text-[8px] leading-none font-semibold whitespace-nowrap uppercase tracking-[0.04em] ${
                     active ? "text-ink" : "text-ink-faint"
                   }`}
                 >
@@ -143,6 +145,55 @@ function ArchiveGlyph({ active }: G) {
         strokeWidth="1.7"
       />
       <path d="M8 11h4" stroke={stroke(active)} strokeWidth="1.7" />
+    </svg>
+  );
+}
+
+function CarGlyph({ active }: G) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden fill="none">
+      <path
+        d="M2 12l1.5-4A2 2 0 0 1 5.4 6.7h9.2a2 2 0 0 1 1.9 1.3L18 12v3h-2M4 15H2v-3m0 0h16"
+        stroke={stroke(active)}
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="6"
+        cy="15"
+        r="1.6"
+        fill={active ? "var(--color-stamp)" : "none"}
+        stroke={stroke(active)}
+        strokeWidth="1.6"
+      />
+      <circle
+        cx="14"
+        cy="15"
+        r="1.6"
+        fill={active ? "var(--color-stamp)" : "none"}
+        stroke={stroke(active)}
+        strokeWidth="1.6"
+      />
+    </svg>
+  );
+}
+
+function TrophyGlyph({ active }: G) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden fill="none">
+      <path
+        d="M6 3h8v3a4 4 0 0 1-8 0z"
+        fill={active ? "var(--color-stamp)" : "none"}
+        stroke={stroke(active)}
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6 4H3.5v1.5A2.5 2.5 0 0 0 6 8M14 4h2.5v1.5A2.5 2.5 0 0 1 14 8M10 10v3M7 17h6M8 17l.5-2h3l.5 2"
+        stroke={stroke(active)}
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

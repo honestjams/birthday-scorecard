@@ -6,15 +6,19 @@ import { GuestsTab } from "./GuestsTab";
 import { TournamentTab } from "./TournamentTab";
 import { SquaresTab } from "./SquaresTab";
 import { ExportTab } from "./ExportTab";
+import { PointsTab } from "./PointsTab";
 import type {
   AppSettings,
   BingoSquare,
+  PointAward,
+  ScoringConfig,
   StaffGuest,
   Tournament,
 } from "@/types/database";
 
 const TABS = [
   "Controls",
+  "Points",
   "Guests",
   "Tournament",
   "Squares",
@@ -27,12 +31,16 @@ export function AdminPanel({
   guests,
   squares,
   tournaments,
+  scoring,
+  awards,
 }: {
   isHost: boolean;
   settings: AppSettings;
   guests: StaffGuest[];
   squares: BingoSquare[];
   tournaments: Tournament[];
+  scoring: ScoringConfig[];
+  awards: PointAward[];
 }) {
   const [tab, setTab] = useState<(typeof TABS)[number]>("Controls");
 
@@ -56,6 +64,9 @@ export function AdminPanel({
 
       <div className="px-4 py-5 pb-12">
         {tab === "Controls" && <ControlsTab settings={settings} />}
+        {tab === "Points" && (
+          <PointsTab guests={guests} scoring={scoring} awards={awards} />
+        )}
         {tab === "Guests" && <GuestsTab guests={guests} isHost={isHost} />}
         {tab === "Tournament" && (
           <TournamentTab guests={guests} tournaments={tournaments} />

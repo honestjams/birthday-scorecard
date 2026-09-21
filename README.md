@@ -25,12 +25,31 @@ into a single-elimination bracket. Byes are spread evenly and resolve
 automatically. Every guest sees one thing at the top: who they're up against
 next. Staff tap a name to record a winner and the bracket advances.
 
+**Carspotting** (`/carspot`) — a rolling, weekend-long hunt. Guests upload
+photos of the cars they spot (as many as they find). The host voids duplicates
+— if two people file the same car, it's out — then convenes a single-
+elimination bracket judged head-to-head, X vs Y, tap-to-pick, down to a winner,
+a runner-up and a 3rd-place playoff. It seeds only from un-voided entries.
+
+**The standing** (`/standings`) — the overall crown. Points from every
+activity roll up into one live board. Karting and carspotting are weighted
+about twice the game tournament; photo bingo contributes a little. Point values
+and the recompute are driven from Bureau → Points.
+
+**Personnel files** (`/u/[id]`) — every guest has a profile: their photo,
+their carspot and bingo uploads, their points breakdown, and their win/loss
+record across the judged brackets. You reach it by tapping any name or avatar.
+Guests set their own display picture and name from their own file.
+
 **The archive** (`/gallery`) — every photo submitted, filterable by person,
 with a full-screen viewer.
 
-**Bureau controls** (`/admin`, staff only) — open and close each activity,
-edit the bingo squares, appoint helpers, run the draw, and export every photo
-as a zip sorted into one folder per square for the recap edit.
+**Bureau controls** (`/admin`, staff only) — open and close each activity
+(bingo, karts, carspotting, tournament), edit the bingo squares, appoint
+helpers, run the draw, tune point values and recompute the standings, award
+discretionary bonuses, and export every photo as a zip sorted into one folder
+per square for the recap edit. Carspot voiding and judging happen inline on
+`/carspot` for staff.
 
 ---
 
@@ -142,10 +161,19 @@ Migrations live in Supabase and are numbered `01_…` to `11_…`. Key points:
   RPC, which checks the caller's role first.
 - `generate_draw()` and `advance_match()` run server-side and check
   `is_staff()` themselves, so the shuffle cannot be influenced from a browser.
-- Realtime is enabled on `kart_times`, `matches`, `bingo_entries` and
-  `tournament_entrants`. The leaderboard and bracket also poll every 15
-  seconds, because venue wifi blocks WebSockets more often than you would
-  like.
+- Realtime is enabled on `kart_times`, `matches`, `bingo_entries`,
+  `tournament_entrants`, `carspot_entries`, `carspot_matches` and
+  `point_awards`. Every live board also polls every 15 seconds, because venue
+  wifi blocks WebSockets more often than you would like.
+- Profile photos live in a separate **public** `avatars` bucket (they appear
+  on every board, so signing each one would be painful); carspot photos live in
+  a private `carspot-photos` bucket alongside `bingo-photos`, served by signed
+  URLs. A guest may edit their own name and avatar but not their role or phone —
+  a trigger enforces that even though the row is theirs to update.
+- Points live in a `point_awards` ledger. `recompute_auto_awards()` regenerates
+  the `source='auto'` rows from each activity's results using `scoring_config`;
+  manual bonuses (`source='manual'`) are left alone. The `standings` view sums
+  the ledger per guest.
 
 ---
 

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { ProfileView } from "@/components/ProfileView";
 import type { CarspotEntry, PointAward } from "@/types/database";
 
@@ -151,10 +151,10 @@ export default async function ProfilePage({
 
   return (
     <main>
-      <Masthead
-        title="Personnel File"
-        formCode="F-12"
-        subtitle={isMe ? "Your record, as held by the Bureau." : undefined}
+      <PageHero
+        theme="profile"
+        kicker={isMe ? "YOUR PROFILE" : "PROFILE"}
+        title={isMe ? "You" : guest.display_name}
       />
       <ProfileView
         guest={guest}

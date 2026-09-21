@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { CarspotBoard, type CarspotEntryRow } from "@/components/CarspotBoard";
 import type { CarspotMatch } from "@/types/database";
 
@@ -67,11 +67,16 @@ export default async function CarspotPage() {
 
   return (
     <main>
-      <Masthead
-        title="Carspotting Bureau"
-        formCode="F-11"
-        subtitle="File the finest car you spot all weekend. Duplicates are void — spot something nobody else will. The adjudicator's eye is final."
-      />
+      <PageHero
+        theme="carspot"
+        kicker="A REAL HUMAN BEING"
+        title="Carspotting"
+      >
+        <p className="max-w-[32ch] text-[13px] leading-snug text-white/80">
+          Shoot the best car you find all weekend. Duplicates get voided — so
+          find one nobody else will. Josh judges the rest.
+        </p>
+      </PageHero>
       <CarspotBoard
         initialEntries={rows}
         initialUrls={Object.fromEntries(urls)}

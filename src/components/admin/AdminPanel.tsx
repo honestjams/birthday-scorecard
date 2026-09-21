@@ -68,9 +68,7 @@ export function AdminPanel({
           <PointsTab guests={guests} scoring={scoring} awards={awards} />
         )}
         {tab === "Guests" && <GuestsTab guests={guests} isHost={isHost} />}
-        {tab === "Tournament" && (
-          <TournamentTab guests={guests} tournaments={tournaments} />
-        )}
+        {tab === "Tournament" && <TournamentTab tournaments={tournaments} />}
         {tab === "Squares" && <SquaresTab squares={squares} />}
         {tab === "Export" && <ExportTab />}
       </div>

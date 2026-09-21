@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { StandingsBoard } from "@/components/StandingsBoard";
 import type { PointAward, StandingsRow } from "@/types/database";
 
@@ -21,11 +21,12 @@ export default async function StandingsPage() {
 
   return (
     <main>
-      <Masthead
-        title="The Overall Standing"
-        formCode="F-10"
-        subtitle="Points across every activity. Karting and carspotting carry the most weight. One attendee will be crowned."
-      />
+      <PageHero theme="standings" kicker="THE OVERALL WINNER" title="Standings">
+        <p className="max-w-[34ch] text-[13px] leading-snug text-white/85">
+          Points from every game, combined. Karts and carspotting count for the
+          most. One winner takes the weekend.
+        </p>
+      </PageHero>
       <StandingsBoard
         initialRows={(rows ?? []) as StandingsRow[]}
         initialAwards={(awards ?? []) as PointAward[]}

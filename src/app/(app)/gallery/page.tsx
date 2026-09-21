@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { GalleryGrid, type GalleryItem } from "@/components/GalleryGrid";
 
 export const dynamic = "force-dynamic";
@@ -46,11 +46,11 @@ export default async function GalleryPage() {
 
   return (
     <main>
-      <Masthead
-        title="The Archive"
-        formCode="F-7C"
-        subtitle="All evidence submitted to date, held on file for the official recap."
-      />
+      <PageHero theme="default" kicker="THE ARCHIVE" title="Photo Archive">
+        <p className="max-w-[34ch] text-[13px] leading-snug text-white/85">
+          Every photo from the weekend, all in one place.
+        </p>
+      </PageHero>
       <GalleryGrid items={items} />
     </main>
   );

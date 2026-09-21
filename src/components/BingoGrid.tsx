@@ -156,7 +156,7 @@ export function BingoGrid({
     <>
       <div className="flex items-center justify-between gap-3 border-b-2 border-ink bg-ink px-5 py-2.5 text-bone">
         <span className="font-mono text-[10px] uppercase tracking-[0.18em]">
-          Submissions on file
+          Squares filled
         </span>
         <span className="font-display text-sm tracking-widest tabular-nums">
           {String(filedCount).padStart(2, "0")} / {squares.length}
@@ -175,11 +175,9 @@ export function BingoGrid({
       {lines.length > 0 ? (
         <div className="mx-4 mt-4 flex items-center gap-2 border-2 border-approved bg-approved/10 px-3 py-2">
           <span className="font-display text-xs uppercase tracking-widest text-approved">
-            {lines.length} line{lines.length > 1 ? "s" : ""} certified
+            {lines.length} line{lines.length > 1 ? "s" : ""} complete
           </span>
-          <span className="text-[12px] text-ink-soft">
-            Notify the adjudicator loudly.
-          </span>
+          <span className="text-[12px] text-ink-soft">Nice one.</span>
         </div>
       ) : null}
 
@@ -301,14 +299,14 @@ function SquareSheet({
         <div className="flex items-start justify-between gap-3 border-b-2 border-ink px-5 pt-4 pb-3">
           <div className="min-w-0">
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
-              Item {String(square.position).padStart(2, "0")} of 25
+              Square {String(square.position).padStart(2, "0")} of 25
             </p>
             <h2 className="mt-1 font-display text-xl leading-tight uppercase">
               {square.title}
             </h2>
           </div>
           {filled ? (
-            <span className="stamp mt-1 shrink-0 text-[10px]">Filed</span>
+            <span className="stamp mt-1 shrink-0 text-[10px]">Done</span>
           ) : null}
         </div>
 
@@ -366,8 +364,8 @@ function SquareSheet({
               </SheetButton>
             </div>
           ) : (
-            <p className="mt-5 border-2 border-ink bg-hazard px-3 py-2 text-center font-mono text-[11px] uppercase tracking-widest">
-              Submissions are closed
+            <p className="mt-5 rounded-xl border border-line bg-surface-2 px-3 py-2.5 text-center text-sm font-medium text-ink-soft">
+              Bingo is closed
             </p>
           )}
 
@@ -375,9 +373,9 @@ function SquareSheet({
             <button
               onClick={onRemove}
               disabled={busy}
-              className="mt-3 w-full py-2 text-center font-mono text-[11px] uppercase tracking-widest text-stamp underline underline-offset-4 disabled:opacity-50"
+              className="mt-3 w-full py-2 text-center text-[13px] font-medium text-stamp disabled:opacity-50"
             >
-              Withdraw this submission
+              Remove photo
             </button>
           ) : null}
         </div>

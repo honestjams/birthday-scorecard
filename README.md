@@ -1,11 +1,14 @@
-# The Bureau of Birthday Affairs
+# Party Scoreboard
 
-A party web app: photo bingo, a go-kart lap time leaderboard, and a random
-knockout draw. Guests sign in with their mobile number and a name — no
-password, no verification code — and everything they submit stays attached to
-that number on whatever phone they pick up.
+A party web app: photo bingo, a go-kart lap time leaderboard, a weekend-long
+carspotting competition, a multi-game tournament, and one overall winner.
+Guests sign in with their mobile number and a name — no password, no
+verification code — and everything they submit stays attached to that number
+on whatever phone they pick up.
 
-Mobile first. Built for one day, designed so the photos survive it.
+Clean and mobile-first, with a light shared skeleton and a distinct look per
+tab (each an original homage — colour, type and motion, no copyrighted
+assets). The party's name is the wordmark.
 
 ---
 
@@ -20,10 +23,14 @@ re-uploading replaces the old one and deletes it from storage.
 (`52.418`, `1:02.418`, `1.02.418`). The board shows each person's personal
 best, fastest first, with the gap to the leader. Updates live.
 
-**The draw** (`/draw`) — the host picks entrants and the server shuffles them
-into a single-elimination bracket. Byes are spread evenly and resolve
-automatically. Every guest sees one thing at the top: who they're up against
-next. Staff tap a name to record a winner and the bracket advances.
+**The tournament** (`/draw`) — a "select a game" hub of pre-loaded games
+(Tekken, Timesplitters 2, Battlefront 2, NFS Underground 2 & Most Wanted,
+Mario Kart, Gran Turismo 4, Crash Bash, and any the host adds). Each game has
+its own single-elimination bracket, drawn on the day: the host opens a game,
+picks the players, and the server shuffles them (byes spread evenly, resolved
+automatically). Every guest sees who they're up against next; staff tap a name
+to record a winner. Each completed game awards tournament points, which
+accumulate toward the overall standings.
 
 **Carspotting** (`/carspot`) — a rolling, weekend-long hunt. Guests upload
 photos of the cars they spot (as many as they find). The host voids duplicates

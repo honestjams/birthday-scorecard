@@ -40,6 +40,12 @@ export function ControlsTab({ settings }: { settings: AppSettings }) {
           onChange={(v) => patch({ kart_open: v })}
         />
         <Toggle
+          label="Carspotting submissions"
+          checked={value.carspot_open}
+          busy={saving === "carspot_open"}
+          onChange={(v) => patch({ carspot_open: v })}
+        />
+        <Toggle
           label="Tournament visible"
           checked={value.tournament_open}
           busy={saving === "tournament_open"}

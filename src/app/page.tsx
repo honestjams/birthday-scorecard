@@ -11,6 +11,7 @@ export default async function LandingPage() {
     .select("party_name, party_date")
     .single();
 
+  const partyName = settings?.party_name ?? "The Party";
   const partyDate = settings?.party_date
     ? new Date(settings.party_date).toLocaleDateString("en-AU", {
         weekday: "long",
@@ -20,69 +21,45 @@ export default async function LandingPage() {
     : null;
 
   return (
-    <main className="min-h-dvh">
-      {/* ---- letterhead ---- */}
-      <div className="border-b-4 border-ink bg-ink px-5 pt-safe pb-5 text-bone">
-        <div className="pt-6">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-bone/60">
-            Commonwealth of Good Times
+    <main className="theme-default min-h-dvh">
+      {/* hero */}
+      <div
+        className="px-6 pt-safe pb-10 text-white"
+        style={{ background: "linear-gradient(150deg,#4f46e5,#7c5cff 55%,#ff2d87)" }}
+      >
+        <div className="pt-12">
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/70">
+            Welcome to
           </p>
-          <h1 className="mt-2 font-display text-[2.6rem] leading-[0.92] uppercase">
-            The Bureau
-            <br />
-            of Birthday
-            <br />
-            <span className="text-hazard">Affairs</span>
+          <h1 className="mt-3 font-display text-[2.7rem] leading-[0.95] uppercase">
+            {partyName}
           </h1>
-          <p className="mt-3 max-w-[38ch] text-sm leading-snug text-bone/75">
-            {settings?.party_name ?? "An official celebration"}
-            {partyDate ? ` · ${partyDate}` : ""}. All attendees must register
-            before submitting evidence, lap times, or objections.
+          <p className="mt-4 max-w-[34ch] text-[15px] leading-snug text-white/85">
+            {partyDate ? `${partyDate}. ` : ""}Photo bingo, kart times,
+            carspotting and a tournament — all weekend, one overall winner.
           </p>
         </div>
       </div>
 
-      {/* ---- ticker ---- */}
-      <div className="overflow-hidden border-b-2 border-ink bg-hazard py-1.5">
-        <div className="flex w-max animate-ticker">
-          {[0, 1].map((k) => (
-            <p
-              key={k}
-              className="shrink-0 px-4 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap"
-              aria-hidden={k === 1}
-            >
-              Photographic evidence required · Lap times are final · The draw is
-              random and cannot be appealed · Photographic evidence required ·
-              Lap times are final · The draw is random and cannot be appealed ·
-            </p>
-          ))}
-        </div>
-      </div>
-
-      {/* ---- registration form ---- */}
+      {/* sign-in */}
       <section className="px-5 py-7">
-        <div className="doc p-5">
-          <div className="mb-5 flex items-baseline justify-between gap-3 rule-dotted pb-3">
-            <h2 className="font-display text-lg uppercase tracking-tight">
-              Form 1 — Registration
-            </h2>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-ink-faint">
-              Rev. 1
-            </span>
-          </div>
-
+        <div className="card p-5">
+          <h2 className="font-display text-lg uppercase tracking-tight">
+            Sign in
+          </h2>
+          <p className="mt-1 mb-5 text-[13px] text-ink-faint">
+            Just your number and a name — no password.
+          </p>
           <Suspense
-            fallback={
-              <div className="h-64 animate-pulse rounded bg-bone-deep/50" />
-            }
+            fallback={<div className="skeleton h-64 w-full" />}
           >
             <LoginForm />
           </Suspense>
         </div>
 
         <p className="mt-6 text-center text-[12px] leading-relaxed text-ink-faint">
-          No password. No verification code. Your number simply keeps your
-          photos and scores attached to you, on whichever phone you pick up.
+          Your number keeps your photos and scores attached to you, on whichever
+          phone you pick up.
         </p>
       </section>
     </main>

@@ -57,12 +57,9 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={submit} className="space-y-5">
-      <fieldset disabled={busy} className="space-y-5">
-        <Field
-          label="1a. Mobile number"
-          hint="Used only to find your file. Never shown to other attendees."
-        >
+    <form onSubmit={submit} className="space-y-4">
+      <fieldset disabled={busy} className="space-y-4">
+        <Field label="Mobile number" hint="Only used to find you. Never shown to anyone.">
           <input
             type="tel"
             inputMode="tel"
@@ -71,14 +68,11 @@ export function LoginForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="0412 345 678"
-            className="w-full border-2 border-ink bg-white px-3 py-3 font-mono tracking-wider outline-none placeholder:text-ink-faint/60 focus:ring-4 focus:ring-hazard"
+            className="w-full rounded-xl border border-line bg-surface-2 px-3.5 py-3 font-mono tracking-wider outline-none placeholder:text-ink-faint/60 focus:border-accent focus:bg-white"
           />
         </Field>
 
-        <Field
-          label="1b. Name, as you wish to be known"
-          hint="This appears on the leaderboard and the draw."
-        >
+        <Field label="Your name" hint="Shown on the leaderboards.">
           <input
             type="text"
             autoComplete="name"
@@ -88,14 +82,14 @@ export function LoginForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Josh"
-            className="w-full border-2 border-ink bg-white px-3 py-3 outline-none placeholder:text-ink-faint/60 focus:ring-4 focus:ring-hazard"
+            className="w-full rounded-xl border border-line bg-surface-2 px-3.5 py-3 outline-none placeholder:text-ink-faint/60 focus:border-accent focus:bg-white"
           />
         </Field>
 
         {error ? (
           <p
             role="alert"
-            className="animate-shake border-2 border-stamp bg-stamp/8 px-3 py-2 text-sm font-medium text-stamp-deep"
+            className="animate-shake rounded-xl border border-stamp/40 bg-stamp/8 px-3 py-2 text-sm font-medium text-stamp-deep"
           >
             {error}
           </p>
@@ -103,17 +97,13 @@ export function LoginForm() {
 
         <motion.button
           type="submit"
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 500, damping: 28 }}
-          className="w-full border-2 border-ink bg-ink px-4 py-4 font-display text-base uppercase tracking-widest text-bone shadow-[4px_4px_0_0_var(--color-stamp)] disabled:opacity-60"
+          className="btn btn-accent w-full text-base"
         >
-          {busy ? "Processing…" : "Submit application"}
+          {busy ? "Signing in…" : "Let's go"}
         </motion.button>
       </fieldset>
-
-      <p className="text-center font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
-        Processing time: instant · Appeals: not accepted
-      </p>
     </form>
   );
 }
@@ -129,15 +119,13 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em]">
-        {label}
-      </span>
+      <span className="text-[13px] font-semibold">{label}</span>
       {hint ? (
         <span className="mt-0.5 block text-[12px] leading-snug text-ink-faint">
           {hint}
         </span>
       ) : null}
-      <span className="mt-2 block">{children}</span>
+      <span className="mt-1.5 block">{children}</span>
     </label>
   );
 }

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { BingoGrid } from "@/components/BingoGrid";
 import type { BingoEntry, BingoSquare } from "@/types/database";
 
@@ -36,11 +36,16 @@ export default async function BingoPage() {
 
   return (
     <main>
-      <Masthead
-        title="Evidence Card"
-        formCode="F-7A"
-        subtitle="Twenty-five items require photographic substantiation. Tap a box to file."
-      />
+      <PageHero
+        theme="bingo"
+        kicker="PHOTO BINGO"
+        title="Photo Bingo"
+      >
+        <p className="max-w-[34ch] text-[13px] leading-snug text-white/85">
+          Tap a square, snap the photo, done. Fill a full row, column or
+          diagonal to score a line.
+        </p>
+      </PageHero>
 
       <BingoGrid
         squares={(squares ?? []) as BingoSquare[]}

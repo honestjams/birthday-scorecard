@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import type {
   AppSettings,
@@ -51,11 +51,11 @@ export default async function AdminPage() {
 
   return (
     <main>
-      <Masthead
-        title="Bureau Controls"
-        formCode="F-00"
-        subtitle="Restricted. Actions taken here are immediate and visible to every attendee."
-      />
+      <PageHero theme="default" kicker="HOST ONLY" title="Controls">
+        <p className="max-w-[34ch] text-[13px] leading-snug text-white/85">
+          Changes here take effect immediately for everyone.
+        </p>
+      </PageHero>
       <AdminPanel
         isHost={me.role === "host"}
         settings={settings as AppSettings}

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { KartBoard } from "@/components/KartBoard";
 import type { KartTime, LeaderboardRow } from "@/types/database";
 
@@ -27,11 +27,15 @@ export default async function KartsPage() {
 
   return (
     <main>
-      <Masthead
-        title="Lap Time Register"
-        formCode="F-7B"
-        subtitle="Declare your fastest lap. Declarations are made under the honour system, which has never once failed."
-      />
+      <PageHero
+        theme="karts"
+        kicker="QUARTER MILE AT A TIME"
+        title="Kart Times"
+      >
+        <p className="max-w-[34ch] text-[13px] leading-snug text-white/85">
+          Log your fastest lap. Quickest time wins — no do-overs, no excuses.
+        </p>
+      </PageHero>
       <KartBoard
         initialBoard={(board ?? []) as LeaderboardRow[]}
         initialMine={(mine ?? []) as KartTime[]}

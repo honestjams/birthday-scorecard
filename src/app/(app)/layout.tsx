@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { GuestProvider } from "@/components/GuestProvider";
-import { BottomNav } from "@/components/BottomNav";
-import { SignOutBar } from "@/components/SignOutBar";
+import { ThemeShell } from "@/components/ThemeShell";
 import type { Guest } from "@/types/database";
 
 export const dynamic = "force-dynamic";
@@ -19,21 +18,22 @@ export default async function AppLayout({
   } = await supabase.auth.getUser();
   if (!user) redirect("/");
 
-  const { data: guest } = await supabase
-    .from("guests")
-    .select("id, display_name, avatar_url, role, created_at, updated_at")
-    .eq("id", user.id)
-    .single();
+  const [{ data: guest }, { data: settings }] = await Promise.all([
+    supabase
+      .from("guests")
+      .select("id, display_name, avatar_url, role, created_at, updated_at")
+      .eq("id", user.id)
+      .single(),
+    supabase.from("app_settings").select("party_name").single(),
+  ]);
 
   if (!guest) redirect("/");
 
   return (
     <GuestProvider guest={guest as Guest}>
-      <div className="flex min-h-dvh flex-col">
-        <div className="flex-1">{children}</div>
-        <SignOutBar />
-        <BottomNav />
-      </div>
+      <ThemeShell partyName={settings?.party_name ?? "The Party"}>
+        {children}
+      </ThemeShell>
     </GuestProvider>
   );
 }

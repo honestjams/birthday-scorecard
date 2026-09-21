@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { Masthead } from "@/components/Masthead";
+import { PageHero } from "@/components/PageHero";
 import { BracketView } from "@/components/BracketView";
 
 export const dynamic = "force-dynamic";
@@ -30,23 +30,23 @@ export default async function DrawPage() {
   if (!tournament) {
     return (
       <main>
-        <Masthead
-          title="The Official Draw"
-          formCode="F-9"
-          subtitle="Rivals are assigned at random and cannot be appealed."
-        />
+        <PageHero theme="tournament" kicker="ROUND 1" title="The Tournament">
+          <p className="max-w-[34ch] font-arcade text-[9px] leading-relaxed text-white/70">
+            Random draw. Single elimination.
+          </p>
+        </PageHero>
         <div className="px-5 py-10">
-          <div className="doc px-5 py-10 text-center">
-            <p className="font-display text-lg uppercase">No draw scheduled</p>
+          <div className="card px-5 py-10 text-center">
+            <p className="font-display text-lg uppercase">No bracket yet</p>
             <p className="mt-2 text-sm text-ink-soft">
-              The Bureau has not yet convened. Check back after the karting.
+              The draw hasn&apos;t been made. Check back once the games begin.
             </p>
             {isStaff ? (
               <Link
                 href="/admin"
-                className="mt-5 inline-block border-2 border-ink bg-ink px-4 py-2.5 font-display text-xs uppercase tracking-widest text-bone"
+                className="btn btn-accent mt-5 inline-flex text-sm uppercase tracking-wide"
               >
-                Convene a tournament
+                Set up the tournament
               </Link>
             ) : null}
           </div>
@@ -78,14 +78,10 @@ export default async function DrawPage() {
 
   return (
     <main>
-      <Masthead
+      <PageHero
+        theme="tournament"
+        kicker={tournament.game ? tournament.game : "ROUND 1 · FIGHT"}
         title={tournament.name}
-        formCode="F-9"
-        subtitle={
-          tournament.game
-            ? `Discipline: ${tournament.game}. Rivals assigned at random.`
-            : "Rivals assigned at random and not subject to appeal."
-        }
       />
       <BracketView
         tournamentId={tournament.id}

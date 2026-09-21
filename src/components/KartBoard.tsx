@@ -129,16 +129,14 @@ export function KartBoard({
         {open ? (
           <form onSubmit={submit} className="space-y-3">
             <label className="block">
-              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em]">
-                Declared lap time
-              </span>
+              <span className="text-[13px] font-semibold">Your best lap</span>
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 inputMode="decimal"
                 placeholder="52.418"
                 aria-label="Lap time"
-                className="mt-2 w-full border-2 border-ink bg-white px-3 py-3 text-center font-mono text-2xl tracking-widest outline-none focus:ring-4 focus:ring-hazard"
+                className="mt-2 w-full rounded-xl border border-line bg-surface-2 px-3 py-3 text-center font-mono text-2xl tracking-widest outline-none focus:border-accent focus:bg-white"
               />
             </label>
 
@@ -148,7 +146,7 @@ export function KartBoard({
               maxLength={24}
               placeholder="Heat / session (optional)"
               aria-label="Session label"
-              className="w-full border-2 border-ink bg-white px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-hazard"
+              className="w-full rounded-xl border border-line bg-surface-2 px-3 py-2 text-sm outline-none focus:border-accent focus:bg-white"
             />
 
             {error ? (
@@ -163,16 +161,16 @@ export function KartBoard({
             <motion.button
               type="submit"
               disabled={busy}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 500, damping: 28 }}
-              className="min-h-[52px] w-full border-2 border-ink bg-ink px-4 py-3 font-display text-sm uppercase tracking-[0.18em] text-bone shadow-[4px_4px_0_0_var(--color-stamp)] disabled:opacity-60"
+              className="btn btn-accent w-full text-sm uppercase tracking-wide disabled:opacity-60"
             >
-              {busy ? "Recording…" : "Lodge declaration"}
+              {busy ? "Saving…" : "Add my time"}
             </motion.button>
           </form>
         ) : (
-          <p className="border-2 border-ink bg-hazard px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest">
-            The register is closed
+          <p className="rounded-xl border border-line bg-surface-2 px-3 py-3 text-center text-sm font-medium text-ink-soft">
+            Lap times are closed
           </p>
         )}
 

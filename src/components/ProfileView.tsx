@@ -103,6 +103,12 @@ export function ProfileView({
     }
   }
 
+  async function signOut() {
+    await supabase.auth.signOut();
+    router.replace("/");
+    router.refresh();
+  }
+
   async function saveName() {
     const trimmed = name.trim();
     if (!trimmed) {
@@ -235,7 +241,7 @@ export function ProfileView({
 
       {/* ---- points breakdown ---- */}
       <section className="mt-6">
-        <SectionHeading>Points on file</SectionHeading>
+        <SectionHeading>Points</SectionHeading>
         {awards.length === 0 ? (
           <p className="doc-soft px-4 py-6 text-center text-sm text-ink-faint">
             No points recorded yet.
@@ -266,9 +272,7 @@ export function ProfileView({
 
       {/* ---- carspot uploads ---- */}
       <section className="mt-6">
-        <SectionHeading>
-          Carspots filed · {carspotUploads.length}
-        </SectionHeading>
+        <SectionHeading>Cars spotted · {carspotUploads.length}</SectionHeading>
         {carspotUploads.length === 0 ? (
           <p className="doc-soft px-4 py-6 text-center text-sm text-ink-faint">
             No cars spotted yet.
@@ -304,10 +308,10 @@ export function ProfileView({
 
       {/* ---- bingo uploads ---- */}
       <section className="mt-6">
-        <SectionHeading>Bingo evidence · {bingoUploads.length}</SectionHeading>
+        <SectionHeading>Bingo photos · {bingoUploads.length}</SectionHeading>
         {bingoUploads.length === 0 ? (
           <p className="doc-soft px-4 py-6 text-center text-sm text-ink-faint">
-            No bingo squares filed yet.
+            No bingo photos yet.
           </p>
         ) : (
           <div className="grid grid-cols-3 gap-1.5">
@@ -333,6 +337,15 @@ export function ProfileView({
           </div>
         )}
       </section>
+
+      {isMe ? (
+        <button
+          onClick={signOut}
+          className="mt-8 w-full rounded-xl border border-line py-3 text-center text-sm font-medium text-ink-soft active:bg-surface-2"
+        >
+          Sign out
+        </button>
+      ) : null}
     </div>
   );
 }

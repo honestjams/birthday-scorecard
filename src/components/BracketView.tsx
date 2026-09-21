@@ -118,10 +118,9 @@ export function BracketView({
   if (matches.length === 0) {
     return (
       <div className="px-5 py-10 text-center">
-        <p className="font-display text-lg uppercase">Draw not yet conducted</p>
+        <p className="font-display text-lg uppercase">Bracket not set yet</p>
         <p className="mt-2 text-sm text-ink-soft">
-          Entrants are being collected. Nobody knows their rival yet, which is
-          how the Bureau prefers it.
+          The draw hasn&apos;t been made. Hang tight.
         </p>
       </div>
     );
@@ -130,36 +129,35 @@ export function BracketView({
   return (
     <>
       {champion ? (
-        <div className="border-b-4 border-ink bg-hazard px-5 py-5 text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em]">
-            Adjudication complete
+        <div
+          className="px-5 py-6 text-center text-white"
+          style={{ background: "linear-gradient(120deg,#131a33,#2f7bff)" }}
+        >
+          <p className="font-arcade text-[10px] uppercase tracking-[0.2em] text-[#ffb400]">
+            Winner
           </p>
-          <p className="mt-1.5 font-display text-2xl uppercase">{champion}</p>
-          <p className="mt-1 text-[12px]">
-            declared overall winner in perpetuity
-          </p>
+          <p className="mt-2.5 font-display text-3xl uppercase">{champion}</p>
+          <p className="mt-1 text-[12px] text-white/70">takes the tournament</p>
         </div>
       ) : myNextMatch ? (
-        <div className="border-b-4 border-ink bg-ink px-5 py-4 text-bone">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-bone/60">
-            Round {myNextMatch.round} · your assigned rival
+        <div className="border-b border-line bg-ink px-5 py-4 text-white">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/60">
+            Round {myNextMatch.round} · your next match
           </p>
           <p className="mt-1 font-display text-2xl uppercase">
-            {myRival ?? "Awaiting opponent"}
+            {myRival ?? "Waiting on opponent"}
           </p>
           {!myRival ? (
-            <p className="mt-1 text-[12px] text-bone/70">
-              Your opponent is still being determined one round below.
+            <p className="mt-1 text-[12px] text-white/70">
+              Your opponent is still being decided one round below.
             </p>
           ) : null}
         </div>
       ) : status === "live" ? (
-        <div className="border-b-4 border-ink bg-bone-deep px-5 py-4 text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em]">
-            You are no longer in contention
-          </p>
+        <div className="border-b border-line bg-surface-2 px-5 py-4 text-center">
+          <p className="text-sm font-semibold">You&apos;re out</p>
           <p className="mt-1 text-[12px] text-ink-soft">
-            The Bureau thanks you for your participation.
+            Thanks for playing — cheer on the rest.
           </p>
         </div>
       ) : null}
@@ -171,8 +169,8 @@ export function BracketView({
       ) : null}
 
       {isStaff ? (
-        <p className="border-b-2 border-ink bg-card px-5 py-2 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-faint">
-          Adjudicator mode — tap a name to record the winner
+        <p className="border-b border-line bg-surface-2 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-faint">
+          Host — tap the winner of each match
         </p>
       ) : null}
 

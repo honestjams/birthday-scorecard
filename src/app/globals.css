@@ -1,32 +1,91 @@
 @import "tailwindcss";
 
 /* ============================================================
-   THE BUREAU OF BIRTHDAY AFFAIRS
-   A party app that takes itself far too seriously.
-   Ink on bone paper, stamped in red, filed in triplicate.
+   Party app — a clean, light, mobile-first system.
+   One calm skeleton (surfaces, spacing, type) that every tab
+   shares; each tab layers its own accent + hero on top.
+   Accent colours are variables so a `.theme-*` wrapper can
+   recolour buttons, links, rings and highlights beneath it.
    ============================================================ */
 
 @theme {
-  /* --- palette ------------------------------------------------ */
-  --color-ink: #14110f; /* warm near-black, the ink */
-  --color-ink-soft: #3a3430;
-  --color-ink-faint: #6e655e;
-  --color-bone: #f2ede1; /* aged paper */
-  --color-bone-deep: #e4dccb; /* paper in shadow */
-  --color-card: #fbf8f1;
-  --color-stamp: #c8102e; /* official stamp red */
-  --color-stamp-deep: #8f0a20;
-  --color-hazard: #ffc400; /* hi-vis, for anything urgent */
-  --color-seal: #1d4e89; /* departmental blue */
-  --color-approved: #2f7d4f;
+  /* --- neutral surfaces & text (light) ------------------- */
+  --color-bg: #f4f6f9;
+  --color-bone: #f4f6f9; /* legacy alias → app background */
+  --color-bone-deep: #e7ebf1; /* subtle fills / dividers */
+  --color-card: #ffffff;
+  --color-surface-2: #f0f3f7;
 
-  /* --- type ---------------------------------------------------- */
+  --color-ink: #14171c; /* near-black text & strong lines */
+  --color-ink-soft: #495060;
+  --color-ink-faint: #868f9e;
+  --color-line: #e3e7ee; /* soft hairline borders */
+
+  /* --- semantic ----------------------------------------- */
+  --color-stamp: #e5484d; /* danger / errors */
+  --color-stamp-deep: #b42318;
+  --color-hazard: #f5b100; /* gold — 1st place / highlight */
+  --color-seal: #2563eb; /* info blue */
+  --color-approved: #16a34a; /* success green */
+
+  /* --- accent (overridden per theme) -------------------- */
+  --color-accent: #4f46e5;
+  --color-accent-2: #818cf8;
+  --color-accent-ink: #ffffff; /* text that sits on the accent */
+
+  /* --- type --------------------------------------------- */
   --font-display: var(--font-archivo-black), ui-sans-serif, system-ui;
   --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-arcade: var(--font-press-start), var(--font-plex-mono), monospace;
+  --font-script: var(--font-kaushan), cursive;
 
-  /* --- motion -------------------------------------------------- */
-  --ease-stamp: cubic-bezier(0.2, 1.4, 0.4, 1);
+  --radius: 16px;
+  --ease-pop: cubic-bezier(0.2, 1.1, 0.35, 1);
+}
+
+/* ============================================================
+   Per-tab accent themes. A wrapper sets these and everything
+   beneath (buttons, active nav, links, rings) recolours.
+   ============================================================ */
+.theme-default {
+  --color-accent: #4f46e5;
+  --color-accent-2: #818cf8;
+  --color-accent-ink: #ffffff;
+}
+.theme-bingo {
+  --color-accent: #0ea5a4;
+  --color-accent-2: #5eead4;
+  --color-accent-ink: #ffffff;
+}
+/* Fast & Furious — nitrous red-orange + amber */
+.theme-karts {
+  --color-accent: #f5391d;
+  --color-accent-2: #ffb400;
+  --color-accent-ink: #ffffff;
+}
+/* Drive — hot pink neon over midnight */
+.theme-carspot {
+  --color-accent: #ff2d87;
+  --color-accent-2: #7c5cff;
+  --color-accent-ink: #ffffff;
+}
+/* Tekken / PS1 arcade — electric blue + red */
+.theme-tournament {
+  --color-accent: #2f7bff;
+  --color-accent-2: #ff415d;
+  --color-accent-ink: #ffffff;
+}
+/* Standings — trophy gold */
+.theme-standings {
+  --color-accent: #e29500;
+  --color-accent-2: #ff8a3d;
+  --color-accent-ink: #ffffff;
+}
+.theme-profile {
+  --color-accent: #6d5efc;
+  --color-accent-2: #a78bfa;
+  --color-accent-ink: #ffffff;
 }
 
 /* ------------------------------------------------------------ */
@@ -37,22 +96,10 @@ html {
 }
 
 body {
-  background-color: var(--color-bone);
+  background-color: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  /* faint paper fibre so the "document" reading holds up */
-  background-image:
-    radial-gradient(
-      circle at 15% 12%,
-      rgba(20, 17, 15, 0.035) 0,
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 85% 78%,
-      rgba(20, 17, 15, 0.03) 0,
-      transparent 40%
-    );
-  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
 }
 
@@ -63,60 +110,109 @@ select {
   font-size: 16px;
 }
 
+/* Consistent, on-theme focus ring across the app. */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* ============================================================
-   Signature element: the rubber stamp.
-   Used on approved submissions, recorded lap times, winners.
+   Surfaces
    ============================================================ */
-@utility stamp {
-  border: 3px solid var(--color-stamp);
-  color: var(--color-stamp);
-  font-family: var(--font-display);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 4px;
-  padding: 0.15rem 0.5rem;
-  transform: rotate(-7deg);
-  opacity: 0.88;
-  box-shadow: inset 0 0 0 1px rgba(200, 16, 46, 0.35);
+@utility card {
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow:
+    0 1px 2px rgba(20, 23, 28, 0.04),
+    0 8px 24px rgba(20, 23, 28, 0.05);
 }
 
-/* Bureaucratic hairline rule used to separate "clauses". */
-@utility rule-dotted {
-  border-bottom: 2px dotted var(--color-bone-deep);
-}
-
-/* Hard-edged institutional card: no soft shadows, a real border. */
+/* Legacy names, softened: old hard "document" cards → clean cards. */
 @utility doc {
   background: var(--color-card);
-  border: 2px solid var(--color-ink);
-  box-shadow: 4px 4px 0 0 var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow:
+    0 1px 2px rgba(20, 23, 28, 0.04),
+    0 8px 24px rgba(20, 23, 28, 0.06);
 }
-
 @utility doc-soft {
   background: var(--color-card);
-  border: 2px solid var(--color-ink);
-  box-shadow: 2px 2px 0 0 var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(20, 23, 28, 0.05);
 }
 
-/* ------------------------------------------------------------ */
+/* A clean uppercase chip (was a rotated rubber stamp). */
+@utility stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72em;
+  line-height: 1.4;
+}
 
-@keyframes stamp-in {
+@utility rule-dotted {
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* Primary / accent buttons used by the new components. */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0 1.1rem;
+  border-radius: 14px;
+  font-weight: 600;
+  transition:
+    transform 0.12s var(--ease-pop),
+    filter 0.15s ease,
+    background-color 0.15s ease;
+}
+@utility btn-primary {
+  background: var(--color-ink);
+  color: #fff;
+}
+@utility btn-accent {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+@utility btn-ghost {
+  background: var(--color-card);
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+}
+
+/* ============================================================
+   Motion
+   ============================================================ */
+@keyframes pop-in {
   0% {
-    transform: scale(2.4) rotate(-22deg);
+    transform: scale(0.6);
     opacity: 0;
   }
-  55% {
-    transform: scale(0.92) rotate(-5deg);
+  60% {
+    transform: scale(1.06);
     opacity: 1;
   }
   100% {
-    transform: scale(1) rotate(-7deg);
-    opacity: 0.88;
+    transform: scale(1);
+    opacity: 1;
   }
 }
-
 .animate-stamp-in {
-  animation: stamp-in 420ms var(--ease-stamp) both;
+  animation: pop-in 320ms var(--ease-pop) both;
 }
 
 @keyframes shake {
@@ -137,25 +233,49 @@ select {
     transform: translateX(4px);
   }
 }
-
 .animate-shake {
   animation: shake 320ms ease-in-out both;
 }
 
-@keyframes ticker {
+@keyframes rise {
   from {
-    transform: translateX(0);
+    transform: translateY(8px);
+    opacity: 0;
   }
   to {
-    transform: translateX(-50%);
+    transform: translateY(0);
+    opacity: 1;
   }
 }
-
-.animate-ticker {
-  animation: ticker 22s linear infinite;
+.animate-rise {
+  animation: rise 260ms var(--ease-pop) both;
 }
 
-/* Respect people who do not want the theatrics. */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bone-deep);
+  border-radius: 12px;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -163,13 +283,25 @@ select {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-/* Safe-area padding for iPhone home indicator. */
+/* Safe-area padding for iPhone. */
 .pb-safe {
   padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
 }
 .pt-safe {
   padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Subtle CRT scanline texture for the arcade (tournament) hero. */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0,
+    rgba(0, 0, 0, 0.16) 1px,
+    transparent 1px,
+    transparent 3px
+  );
 }
